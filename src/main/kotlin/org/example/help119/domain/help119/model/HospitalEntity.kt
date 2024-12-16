@@ -17,6 +17,9 @@ class HospitalEntity (
     @Column(name = "maxCapacity", nullable = false)
     var maxCapacity : Long,
 
+    @Column(name = "telNumber", nullable = false)
+    var telNumber : String,
+
     @Column(name = "currentCapacity", nullable = false)
     var currentCapacity : Long,
 ) {

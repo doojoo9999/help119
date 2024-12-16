@@ -4,4 +4,8 @@ import org.example.help119.domain.help119.model.HospitalEntity
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface HospitalRepository : JpaRepository<HospitalEntity, Long> {
+
+    fun findByName(name : String) : HospitalEntity
+    fun findByTelNumber(telNumber : String) : HospitalEntity
+
 }

@@ -1,10 +1,31 @@
 package org.example.help119.domain.help119.service
 
+import org.example.help119.domain.help119.dto.request.HospitalRequest
 import org.example.help119.domain.help119.model.HospitalEntity
 import org.example.help119.domain.help119.repository.HospitalRepository
+import org.springframework.data.repository.findByIdOrNull
 
 class HospitalService(
     private val hospitalRepository: HospitalRepository
 ) {
 
+    fun enrollHospital(request: HospitalRequest) {
+        val telNumberCheck = hospitalRepository.findByTelNumber(request.hospitalTelNumber)
+
+        if (telNumberCheck == null) {
+            throw IllegalStateException("이미 등록된 전화번호입니다.")
+        }
+
+        val newHospital = HospitalEntity(
+            code = request.hospitalCode,
+            name = request.hospitalName,
+            region = request.hospitalRegion,
+            maxCapacity = request.maxCapacity,
+            telNumber = request.hospitalTelNumber,
+            currentCapacity = 0
+        )
+
+        hospitalRepository.save(newHospital)
+
+    }
 }
