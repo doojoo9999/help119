@@ -1,6 +1,8 @@
 package org.example.help119.domain.help119.service
 
+import org.example.help119.domain.help119.dto.request.GetHospitalRequest
 import org.example.help119.domain.help119.dto.request.HospitalRequest
+import org.example.help119.domain.help119.dto.response.HospitalResponse
 import org.example.help119.domain.help119.model.HospitalEntity
 import org.example.help119.domain.help119.repository.HospitalRepository
 import org.springframework.data.repository.findByIdOrNull
@@ -28,4 +30,17 @@ class HospitalService(
         hospitalRepository.save(newHospital)
 
     }
+
+    fun getHospital(request: GetHospitalRequest) : HospitalResponse  {
+
+        val hospitalCheck = hospitalRepository.findByName(request.hospitalName)
+
+        return HospitalResponse(
+            hospitalCheck.code,
+            hospitalCheck.currentCapacity,
+            hospitalCheck.maxCapacity
+        )
+
+    }
+
 }
