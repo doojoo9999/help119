@@ -35,11 +35,13 @@ class HospitalService(
 
         val hospitalCheck = hospitalRepository.findByName(request.hospitalName)
 
-        return HospitalResponse(
-            hospitalCheck.code,
-            hospitalCheck.currentCapacity,
-            hospitalCheck.maxCapacity
+        val response = HospitalResponse(
+        hospitalCheck.code,
+        hospitalCheck.currentCapacity,
+        hospitalCheck.maxCapacity
         )
+
+        return response
 
     }
 
