@@ -26,4 +26,17 @@ class HospitalEntity (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id = 0
+
+
+    fun fullCapacity() {
+        this.currentCapacity = this.maxCapacity
+    }
+
+    fun emptyCapacity() {
+        this.currentCapacity = 0
+    }
+
+    fun changeCapacity(newCapacity : Long) {
+        this.currentCapacity = newCapacity
+    }
 }
