@@ -4,12 +4,14 @@ import org.example.help119.domain.help119.dto.request.AmbulanceRequest
 import org.example.help119.domain.help119.dto.response.AmbulanceResponse
 import org.example.help119.domain.help119.model.AmbulanceEntity
 import org.example.help119.domain.help119.repository.AmbulanceRepository
+import org.example.help119.domain.help119.repository.HospitalRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
 class SystemService (
-    private val ambulanceRepository: AmbulanceRepository
+    private val ambulanceRepository: AmbulanceRepository,
+    private val hospitalRepository: HospitalRepository
 ){
 
     fun callBy119(ambulanceRequest : AmbulanceRequest){
@@ -34,6 +36,19 @@ class SystemService (
 
     fun getCalledAmbList() : List<AmbulanceResponse> {
         return ambulanceRepository.findAll().map {AmbulanceResponse(it.status,it.area, it.time)}
+    }
+
+    fun bookHospital(ambId : Long, hospitalName: String) {
+
+        val ambCheck = ambulanceRepository.findByIdOrNull(ambId) ?: throw IllegalStateException ("Amb Not Found")
+        val hospitalCheck = hospitalRepository.findByName(hospitalName) ?: throw IllegalStateException ("Hospital Not Found")
+
+        if (hospitalCheck.currentCapacity == hospitalCheck.maxCapacity) {
+            throw IllegalStateException ("잔여 침상이 없습니다.")
+        }
+
+        hospitalCheck.changeCapacity(hospitalCheck.currentCapacity+1)
+
     }
 
 
