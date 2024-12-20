@@ -1,6 +1,7 @@
 package org.example.help119.domain.help119.service
 
 import org.example.help119.domain.help119.dto.request.AmbulanceRequest
+import org.example.help119.domain.help119.dto.request.HospitalBookingRequest
 import org.example.help119.domain.help119.dto.response.AmbulanceResponse
 import org.example.help119.domain.help119.model.AmbulanceEntity
 import org.example.help119.domain.help119.repository.AmbulanceRepository
@@ -38,10 +39,10 @@ class SystemService (
         return ambulanceRepository.findAll().map {AmbulanceResponse(it.status,it.area, it.time)}
     }
 
-    fun bookHospital(ambId : Long, hospitalName: String) {
+    fun bookHospital(request: HospitalBookingRequest) {
 
-        val ambCheck = ambulanceRepository.findByIdOrNull(ambId) ?: throw IllegalStateException ("Amb Not Found")
-        val hospitalCheck = hospitalRepository.findByName(hospitalName) ?: throw IllegalStateException ("Hospital Not Found")
+        val ambCheck = ambulanceRepository.findByIdOrNull(request.amb) ?: throw IllegalStateException ("Amb Not Found")
+        val hospitalCheck = hospitalRepository.findByName(request.hospitalName) ?: throw IllegalStateException ("Hospital Not Found")
 
         if (hospitalCheck.currentCapacity == hospitalCheck.maxCapacity) {
             throw IllegalStateException ("잔여 침상이 없습니다.")

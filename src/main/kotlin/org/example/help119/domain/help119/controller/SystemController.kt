@@ -1,6 +1,7 @@
 package org.example.help119.domain.help119.controller
 
 import org.example.help119.domain.help119.dto.request.AmbulanceRequest
+import org.example.help119.domain.help119.dto.request.HospitalBookingRequest
 import org.example.help119.domain.help119.dto.response.AmbulanceResponse
 import org.example.help119.domain.help119.service.SystemService
 import org.springframework.http.HttpStatus
@@ -45,7 +46,17 @@ class SystemController(
             .build()
 
     }
-    
+
+    fun bookHospital(
+        request: HospitalBookingRequest
+    ) : ResponseEntity<Unit> {
+
+        systemService.bookHospital(request)
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .build()
+    }
 
 
 }
