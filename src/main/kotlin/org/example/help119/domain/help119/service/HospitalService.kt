@@ -1,5 +1,6 @@
 package org.example.help119.domain.help119.service
 
+import org.example.help119.domain.help119.dto.request.FullCapacityRequest
 import org.example.help119.domain.help119.dto.request.GetHospitalRequest
 import org.example.help119.domain.help119.dto.request.HospitalRequest
 import org.example.help119.domain.help119.dto.request.UpdateCapacityRequest
@@ -51,6 +52,14 @@ class HospitalService(
         val hospitalCheck = hospitalRepository.findByIdOrNull(request.id) ?: throw IllegalStateException("id not found")
 
         hospitalCheck.changeCapacity(request.nowCapacity)
+
+    }
+
+    fun fullCapacity(request : FullCapacityRequest) {
+
+        val hospitalCheck = hospitalRepository.findByIdOrNull(request.hospitalId) ?: throw IllegalStateException("id not found")
+
+        hospitalCheck.fullCapacity()
 
     }
 
